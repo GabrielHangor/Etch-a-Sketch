@@ -18,14 +18,16 @@ body {
   font-family: "Quicksand", sans-serif;
 }
 
+/* Main Container */
+
 .container {
   display: flex;
   flex-direction: column;
   width: 600px;
   height: 663.38px;
   border-radius: 10px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
 }
 
@@ -41,6 +43,9 @@ header {
   width: 100%;
 }
 
+
+/* Grid Container */
+
 .grid-container {
   display: grid;
   grid-template-rows: repeat(var(--grid-rows), 1fr);
@@ -50,7 +55,45 @@ header {
 
 .grid-cell {
   border-width: 0.1px;
-  border-color: rgb(221, 221, 221);
+  border-color: rgb(240, 240, 240);
   border-style: solid;
   cursor: pointer;
+  transition: all 0.3s ease-out;
 }
+
+/* Button Container */
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgb(201, 228, 255);
+  height: 70px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.resetBtn {
+  user-select: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 10px;
+  font-family: "Quicksand", sans-serif;
+  color: rgb(5, 5, 5);
+  background: rgb(165, 207, 255);
+  outline: none;
+  padding: 0.4rem 1.8rem;
+  box-shadow: 0 0.3rem rgba(255, 255, 255, 0.65);
+}
+
+.resetBtn:hover {
+  filter: brightness(97%);
+}
+
+.resetBtn:active {
+  transform: translate(0, 0.3rem);
+  box-shadow: 0 0.01rem rgba(255, 255, 255, 0.65);
+}
+
