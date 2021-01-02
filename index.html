@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Etch-a-Sketch</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <!-- Main container -->
   <div class="container">
     <header>Etch-a-Sketch</header>
     <!-- Grid container -->
     <div class="grid-container">
-      
+
     </div>
+    <!-- Controls -->
     <div class="button-container">
-      <button class="resetBtn">Reset</button>
+      <div class="buttons">
+        <button class="resetBtn">Reset</button>
+      </div>
+      <div class="slider">
+        <input id="size" type="range" min="4" max="100" value="10" step="1">
+        <label class="grid-size" for="size">Grid Size: 10x10</label>
+      </div>
     </div>
 
   </div>
 
+
+
   <script src="script.js"></script>
 </body>
+
 </html>
