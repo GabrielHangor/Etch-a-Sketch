@@ -84,8 +84,9 @@ header {
 
 .buttons {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  width: 95%;
 }
 
 .resetBtn {
@@ -101,6 +102,30 @@ header {
   outline: none;
   padding: 0.4rem 1.8rem;
   box-shadow: 0 0.3rem rgba(255, 255, 255, 0.65);
+}
+
+.randomBtn {
+  user-select: none;
+  cursor: pointer;
+  font-size: 1rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 10px;
+  font-family: "Quicksand", sans-serif;
+  color: rgb(5, 5, 5);
+  background: rgb(165, 207, 255);
+  outline: none;
+  padding: 0.4rem 0.3rem;
+  box-shadow: 0 0.3rem rgba(255, 255, 255, 0.65);
+}
+
+.randomBtn:hover {
+  filter: brightness(97%);
+}
+
+.randomBtn:active {
+  transform: translate(0, 0.3rem);
+  box-shadow: 0 0.01rem rgba(255, 255, 255, 0.65);
 }
 
 .resetBtn:hover {
