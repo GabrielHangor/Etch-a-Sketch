@@ -3,6 +3,7 @@
 :root {
   --grid-rows: 1;
   --grid-columns: 1;
+  --pen-color: rgb(176, 220, 255);
 }
 
 body {
@@ -60,6 +61,14 @@ header {
   transition: all 0.3s ease-out;
 }
 
+.grid-cell:hover {
+  background-color: var(--pen-color);
+}
+
+.grid-cell:active {
+  transform: scale(0.96);
+}
+
 /* Button Container */
 
 .button-container {
@@ -110,6 +119,7 @@ header {
 }
 
 #size {
+  cursor: pointer;
   width: 70%;
 }
 

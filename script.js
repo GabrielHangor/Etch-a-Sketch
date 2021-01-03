@@ -3,10 +3,15 @@ const resetBtn = document.querySelector(".resetBtn");
 const gridSizeInput = document.querySelector("#size");
 const gridSizeEl = document.querySelector(".grid-size");
 
+let currentPenColor = "rgb(176, 220, 255)";
+let togglePen = false;
+let toggleRandom = false;
+
 // Create a whiteboard based on the ammount of rows & columns
 function createGrid(rows, columns) {
   gridContainer.style.setProperty("--grid-rows", rows);
   gridContainer.style.setProperty("--grid-columns", columns);
+
 
   for (let i = 0; i < rows * columns; i++) {
     let cell = document.createElement("div");
@@ -15,6 +20,7 @@ function createGrid(rows, columns) {
   }
 }
 
+// Update the grid when the scrollbar's valie is changed
 function updateGrid(cellSize) {
   gridContainer.textContent = "";
   resetBoard();
@@ -26,20 +32,28 @@ function updateGrid(cellSize) {
 function resetBoard() {
   const cells = [...gridContainer.children];
   cells.forEach((cell) => {
-    cell.style.backgroundColor = "whitesmoke";
+    cell.style.backgroundColor = "";
   });
 }
 
 // Eventlisteners
 gridContainer.addEventListener("mouseover", (e) => {
-  e.target.style.backgroundColor = "black";
+  if (togglePen) {
+    e.target.style.backgroundColor = `${currentPenColor}`;
+  }
+});
+
+gridContainer.addEventListener("click", () => {
+  togglePen = !togglePen;
 });
 
 resetBtn.addEventListener("click", resetBoard);
 
+
+// Change the grid size dynamically
 gridSizeInput.addEventListener("input", () => {
   let currentCellSize = gridSizeInput.value;
   updateGrid(currentCellSize);
 });
 
-createGrid(10, 10);
+createGrid(4, 4);
