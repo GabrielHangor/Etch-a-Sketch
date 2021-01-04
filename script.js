@@ -3,8 +3,9 @@ const resetBtn = document.querySelector(".resetBtn");
 const gridSizeInput = document.querySelector("#size");
 const gridSizeEl = document.querySelector(".grid-size");
 const randomBtn = document.querySelector(".randomBtn");
+const colorInput = document.querySelector("#color-input");
 
-let currentPenColor = "rgb(176, 220, 255)";
+let currentPenColor = "#B0DCFF";
 let togglePen = false;
 let toggleRandom = false;
 
@@ -44,11 +45,29 @@ function getRandomColor() {
   return bgColor;
 }
 
+function darkenColor(color) {
+  rgbArr = color
+    .substring(4, color.length - 1)
+    .replace(/ /g, "")
+    .split(",");
+
+  const x = Math.floor(rgbArr[0] * 0.9);
+  const y = Math.floor(rgbArr[1] * 0.9);
+  const z = Math.floor(rgbArr[2] * 0.9);
+  const bgColor = "rgb(" + x + "," + y + "," + z + ")";
+  return bgColor;
+}
+
 // Eventlisteners
 gridContainer.addEventListener("mouseover", (e) => {
-  if (togglePen && toggleRandom) {
-    e.target.style.backgroundColor = getRandomColor();
-  } else if (togglePen) {
+  if (togglePen && toggleRandom && !e.target.getAttribute("data-color")) {
+    const currentCellColor = getRandomColor();
+    e.target.style.backgroundColor = currentCellColor;
+    e.target.setAttribute("data-color", currentCellColor);
+  } else if (togglePen && toggleRandom && e.target.getAttribute("data-color")) {
+    e.target.style.backgroundColor = darkenColor(e.target.getAttribute("data-color"));
+    e.target.setAttribute('data-color', e.target.style.backgroundColor);
+  } else if (togglePen && !e.target.getAttribute("data-color")) {
     e.target.style.backgroundColor = `${currentPenColor}`;
   }
 });
@@ -71,6 +90,13 @@ randomBtn.addEventListener("click", () => {
 gridSizeInput.addEventListener("input", () => {
   let currentCellSize = gridSizeInput.value;
   updateGrid(currentCellSize);
+});
+
+// Set the currentPenColor value
+colorInput.addEventListener("input", () => {
+  currentPenColor = colorInput.value;
+  colorInput.style.setProperty("--pen-color", currentPenColor);
+  gridContainer.style.setProperty("--pen-color", currentPenColor);
 });
 
 createGrid(4, 4);
