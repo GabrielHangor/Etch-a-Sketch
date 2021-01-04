@@ -172,3 +172,19 @@ input[type="color"]::-webkit-color-swatch {
 .grid-size {
   font-size: 1.2rem;
 }
+
+@media screen and (max-width: 500px) {
+  .container {
+    width: 98%;
+    height: 98%;
+  }
+  .grid-size {
+    font-size: 0.8rem;
+  }
+  .randomBtn{
+    font-size: 0.8rem;
+  }
+  #color-input {
+    padding: 0.3rem 1rem;
+  }
+}

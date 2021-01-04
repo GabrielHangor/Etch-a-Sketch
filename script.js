@@ -21,7 +21,7 @@ function createGrid(rows, columns) {
   }
 }
 
-// Update the grid when the scrollbar's valie is changed
+// Update the grid when the scrollbar's value is changed
 function updateGrid(cellSize) {
   gridContainer.textContent = "";
   resetBoard();
@@ -29,11 +29,13 @@ function updateGrid(cellSize) {
   gridSizeEl.textContent = `Grid Size: ${cellSize}x${cellSize}`;
 }
 
-// Reset the background color of all the cells to default
+// Reset the background color of all the cells to default and delete custom attributes
 function resetBoard() {
   const cells = [...gridContainer.children];
   cells.forEach((cell) => {
     cell.style.backgroundColor = "";
+    cell.removeAttribute("data-color");
+    cell.removeAttribute("toggledNormal");
   });
 }
 
@@ -45,36 +47,44 @@ function getRandomColor() {
   return bgColor;
 }
 
+
+// Create an array with values from rbg color and return the darker rbg color
 function darkenColor(color) {
   rgbArr = color
     .substring(4, color.length - 1)
     .replace(/ /g, "")
     .split(",");
 
-  const x = Math.floor(rgbArr[0] * 0.9);
-  const y = Math.floor(rgbArr[1] * 0.9);
-  const z = Math.floor(rgbArr[2] * 0.9);
+  const x = Math.floor(rgbArr[0] * 0.77);
+  const y = Math.floor(rgbArr[1] * 0.77);
+  const z = Math.floor(rgbArr[2] * 0.77);
   const bgColor = "rgb(" + x + "," + y + "," + z + ")";
   return bgColor;
 }
 
-// Eventlisteners
-gridContainer.addEventListener("mouseover", (e) => {
-  if (togglePen && toggleRandom && !e.target.getAttribute("data-color")) {
-    const currentCellColor = getRandomColor();
-    e.target.style.backgroundColor = currentCellColor;
-    e.target.setAttribute("data-color", currentCellColor);
-  } else if (togglePen && toggleRandom && e.target.getAttribute("data-color")) {
-    e.target.style.backgroundColor = darkenColor(e.target.getAttribute("data-color"));
-    e.target.setAttribute('data-color', e.target.style.backgroundColor);
-  } else if (togglePen && !e.target.getAttribute("data-color")) {
-    e.target.style.backgroundColor = `${currentPenColor}`;
-  }
-});
 
-gridContainer.addEventListener("click", () => {
-  togglePen = !togglePen;
-});
+// Based on toggles and custom html attributes in the particular cell, either colors it with a random color, darkens the previously set random color or colors the cell with a chosen particular color
+function paintProperly(e) {
+  if (togglePen && toggleRandom && !e.target.getAttribute("data-color") 
+  && !e.target.getAttribute("toggledNormal")
+  ) {
+    e.target.style.backgroundColor = getRandomColor();
+    e.target.setAttribute("data-color", e.target.style.backgroundColor);
+  } else if (togglePen && toggleRandom && e.target.getAttribute("data-color") &&
+    !e.target.getAttribute("toggledNormal")
+  ) {
+    e.target.style.backgroundColor = darkenColor(e.target.getAttribute("data-color"));
+    e.target.setAttribute("data-color", e.target.style.backgroundColor);
+  } else if (togglePen && !e.target.getAttribute("data-color") && !toggleRandom) {
+    e.target.style.backgroundColor = `${currentPenColor}`;
+    e.target.setAttribute("toggledNormal", true);
+  }
+}
+
+// Eventlisteners
+gridContainer.addEventListener("mouseover", (e) => paintProperly(e));
+
+gridContainer.addEventListener("click", () => (togglePen = !togglePen));
 
 resetBtn.addEventListener("click", resetBoard);
 
@@ -92,7 +102,7 @@ gridSizeInput.addEventListener("input", () => {
   updateGrid(currentCellSize);
 });
 
-// Set the currentPenColor value
+// Set the currentPenColor value with the color input tool
 colorInput.addEventListener("input", () => {
   currentPenColor = colorInput.value;
   colorInput.style.setProperty("--pen-color", currentPenColor);
